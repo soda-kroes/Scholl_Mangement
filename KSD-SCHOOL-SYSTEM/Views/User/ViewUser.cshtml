@@ -1,0 +1,631 @@
+﻿@{
+    ViewData["Title"] = "ViewUser";
+}
+@*link data table*@
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<link href=" https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    /*table tbody tr td{
+       background-color: #ffffff;
+       color:#808080;
+       }*/
+    .select {
+        background-color: #68B6DE;
+    }
+
+    .table-responsive {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+</style>
+<div class="container-fluid1">
+    <div class="row">
+        <div class="col-sm-12">
+            <h5><i class="fas fa-home"></i>Home <i class="fas fa-arrow-right"></i> User <i class="fas fa-arrow-right"></i> ViewUser</h5>
+        </div>
+    </div>
+    <br />
+    <div class="table-responsive">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="idUserView" class="table table-bordered table-sm table-hover" style="width:100%;">
+                    <thead style=" background-color:#FBC576">
+                        <tr>
+                            <th>No</th>
+                            <th>User Code</th>
+                            <th>Full Name</th>
+                            <th>Employee Code</th>
+                            <th>Password</th>
+                            <th>Branch</th>
+                            <th>Role</th>
+                            <th>Locked</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot style=" background-color:#FBC576">
+                        <tr>
+                            <th>No</th>
+                            <th>User Code</th>
+                            <th>Full Name</th>
+                            <th>Employee Code</th>
+                            <th>Password</th>
+                            <th>Branch</th>
+                            <th>Role</th>
+                            <th>Locked</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-outline-info" data-target="#idFormUser" data-toggle="modal">Add new</button>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+<div class="modal fade" id="idFormUser" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="need-novalidate-new" novalidate>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            User Code
+                            <input id="txtUserCode" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please enter user code</div>
+                            Full Name
+                            <input id="txtFullName" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please enter full name</div>
+                            Employee Code
+                            <input id="txtEmployeeCode" type="text" class="form-control" />
+                            Branch
+                            <select class="form-control" id="ddlBranch"></select>
+                            <div class="invalid-feedback">please select branch</div>
+                        </div>
+                        <div class="col-sm-6">
+                            Password
+                            <input id="txtPassword" type="text" class="form-control" value="abc123" readonly />
+                            Role
+                            <select class="form-control" id="ddlRole">
+                                <option value="A">Admin</option>
+                                <option value="U" selected>User</option>
+                            </select>
+                            Lock
+                            <select class="form-control" id="ddlLock" disabled>
+                                <option value="Y">Yes</option>
+                                <option value="N" selected>No</option>
+                            </select>
+                            Status
+                            <select class="form-control" id="ddlStatus" disabled>
+                                <option value="A" selected>Active</option>
+                                <option value="I">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+@*----------------------------------------------------------Create Update PopUp Form----------------------------------------------------------*@
+<div class="modal fade" id="idFormUser-Update" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="need-novalidate-Update" novalidate>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            User Code
+                            <input id="utxtUserCode" type="text" class="form-control" readonly />
+                            Full Name
+                            <input id="utxtFullName" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please enter full name</div>
+                            Employee Code
+                            <input id="utxtEmployeeCode" type="text" class="form-control" />
+                            Branch
+                            <select class="form-control" id="uddlBranch"></select>
+                            <div class="invalid-feedback">please select branch</div>
+                        </div>
+                        <div class="col-sm-6">
+                            Password
+                            <input id="utxtPassword" type="text" class="form-control" value="abc1223" readonly />
+                            Role
+                            <select class="form-control" id="uddlRole">
+                                <option value="A">Admin</option>
+                                <option value="U" selected>User</option>
+                            </select>
+                            Lock
+                            <select class="form-control" id="uddlLock">
+                                <option value="Y" selected>Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                            Status
+                            <select class="form-control" id="uddlStatus">
+                                <option value="A" selected>Active</option>
+                                <option value="I">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnUpdate">Update</button>
+                        <button id="btnReset" class="btn btn-danger d-none">Reset</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Update PopUp Form----------------------------------------------------------*@
+@*----------------------------------------------------------Create Loading PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoading" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Loading PopUp Form----------------------------------------------------------*@
+@*----------------------------------------------------------Create Error PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoadingError" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+            </div>
+            <div class="modal-body">
+                <div id="msg"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Error PopUp Form----------------------------------------------------------*@
+@*----------------------------------------------------------Create Success PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoadingSucess" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+            </div>
+            <div class="modal-body">
+                <div id="msgSuccess"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Success PopUp Form----------------------------------------------------------*@
+<script type="text/javascript">
+    //------------------------------------------------------for call datatable--------------------------------------------------------
+    // Call the DataTable default not have data
+    // $('#idUserView').DataTable();
+
+    $('#idUserView').DataTable({
+        data: Users,
+        columns: [
+            // { data: "docEntry" },
+            {
+                render: function (data, type, full, meta) { return meta.row + 1; }//for show auto increment id
+            },
+            { data: "userCode" },
+            { data: "fullName" },
+            { data: "empCode" },
+            { data: "password" },
+            { data: "branch" },
+            { data: "role" },
+            { data: "locked" },
+            { data: "status" },
+            {
+                render: function (data, type, full, meta) {
+                    return '<a href="#" onclick="remove(' + full.docEntry + ')"><i class="fas fa-trash"></i></a>'
+                }
+            }
+        ]
+
+    });
+
+
+
+    var table = $('#idUserView').DataTable();
+    var Users = [];
+    function getData() {
+        $.ajax({
+            url: '@Url.Action("GetUser","User")',
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                if (data.errCode == 0) {
+                    Users = [];
+                    Users = data.users;
+
+
+                    table.clear();
+                    table.rows.add(Users);
+                    table.draw();
+                } else {
+                    $('#msg').text(data.errMsg);
+                }
+            }
+        });
+    }
+    //------------------------------------------------------for call datatable--------------------------------------------------------
+
+
+    // Hold screen to validation
+    var form = document.getElementsByClassName('need-novalidate-new');
+    var validation = Array.prototype.filter.call(form, function (forms) {
+        forms.addEventListener('submit', function (event) {
+            if (forms.checkValidity() == false) {
+                event.preventDefault();
+            }
+            else {
+                event.preventDefault();
+                var obj = {};
+                obj.UserCode = $('#txtUserCode').val();
+                obj.FullName = $('#txtFullName').val();
+                obj.EmpCode = $('#txtEmployeeCode').val();
+                obj.Branch = $('#ddlBranch').val();
+                obj.Role = $('#ddlRole').val();
+
+                $('#idFormUser').modal('hide');
+                $('#idLoading').modal('show');
+
+                $.ajax({
+                    url: '@Url.Action("PostUser","User")',
+                    type: "POST",
+                    dataType: "JSON",//OK
+                    data: { user: obj },
+                    success: function (data) {
+                        if (data.errCode == 0) {
+
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                //alert(data.errMsg);
+                                $('#idLoadingSucess').modal('show');
+                                $('#msgSuccess').text(data.errMsg);
+                                getData();
+                            }, 2020);// Delay message
+
+
+                        } else {
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                $('#idLoadingError').modal('show');
+                                //alert(data.errMsg);
+                                $('#msg').text(data.errMsg);
+                            }, 2020);// Delay message
+                        }
+                    },
+
+                });
+
+
+
+            }
+            forms.classList.add('was-validated');
+        }, false);
+    });
+
+
+
+
+
+    //---------------------------------------------------------DELETE FUNCTION---------------------------------------------------------
+    function remove(ID) {
+        if (confirm("Do you want to delete ? ") == true) {
+            //alert(ID);
+            $.ajax({
+                url: '@Url.Action("DeleteUser","User")',
+                type: "GET",
+                dataType: "JSON",
+                data: { docentry: ID },
+                success: function (data) {
+                    if (data.errCode == 0) {
+
+                        $('#idLoadingSucess').modal('show');
+                        $('#msgSuccess').text(data.errMsg);
+                        getData();
+                    }
+                    else {
+                        $('#idLoadingError').modal('show');
+                        //alert(data.errMsg);
+                        $('#msg').text(data.errMsg);
+                    }
+
+                }
+            });
+        }
+    }
+
+    //---------------------------------------------------------DELETE FUNCTION---------------------------------------------------------
+
+
+
+    //---------------------------------------------------------UPDATE FUNCTION---------------------------------------------------------
+    //i use double click to show update form
+    $('#idUserView tbody').on('dblclick', 'tr', function () {
+        //use for select row on datatable
+        if ($(this).hasClass('select')) {
+
+            $(this).removeClass('select');
+        } else {
+            table.$('tr.select').removeClass('select');
+            $(this).addClass('select');
+
+        }
+
+        var index = table.row('.select').index()
+        var data = table.row(index).data();
+
+        //for update
+        $('#utxtUserCode').val(data.userCode)
+        $('#utxtFullName').val(data.fullName)
+        $('#utxtEmployeeCode').val(data.empCode)
+        $('#utxtPassword').val(data.password)
+        //call branch 
+        calBranch(data.branch);
+        
+
+        if (data.role == "Admin") $('#uddlRole').val('A')
+        else $('#uddlRole').val('U')
+        // $('#uddlRole').val(data.role)
+
+        if (data.locked == "No") $('#uddlLock').val('N')
+        else $('#uddlLock').val('Y')
+        //$('#uddlLock').val(data.locked)
+
+        if (data.status == "Active") $('#uddlStatus').val('A')
+        else $('#uddlStatus').val('I')
+        //('#uddlStatus').val(data.status)
+
+        if (data.expiredLocked == "Y") {
+            $('#btnReset').removeClass("d-none");
+        }
+        else {
+            $('#btnReset').addClass("d-none");
+        }
+        $('#idFormUser-Update').modal('show');
+    })
+
+    var reset = false;
+    $('#btnReset').click(function () {
+        reset = true;
+
+
+        if (confirm("Do you want to reset?") == true) {
+            $('#idFormUser-Update').modal('hide');
+            $('#idLoading').modal('show');
+
+            $.ajax({
+                url: '@Url.Action("ResetUser","User")',
+                type: "POST",
+                dataType: "JSON",//OK
+                data: { Usercode: $('#utxtUserCode').val() },
+                success: function (data) {
+                    if (data.errCode == 0) {
+
+                        setTimeout(function () {
+                            $('#idLoading').modal('hide');
+
+                        }, 2000);// Delay modal
+
+                        setTimeout(function () {
+                            //alert(data.errMsg);
+                            $('#idLoadingSucess').modal('show');
+                            $('#msgSuccess').text(data.errMsg);
+                            $('#idFormUser-Update').modal('hide');
+                            getData();
+                        }, 2020);// Delay message
+
+
+                    } else {
+                        setTimeout(function () {
+                            $('#idLoading').modal('hide');
+                        }, 2000);// Delay modal
+
+                        setTimeout(function () {
+                            $('#idLoadingError').modal('show');
+                            //alert(data.errMsg);
+                            $('#msg').text(data.errMsg);
+                        }, 2020);// Delay message
+                    }
+                },
+
+            });
+
+        }
+
+    })
+
+    $('#btnUpdate').click(function () {
+        reset = false;
+    })
+
+    // Hold screen to validation
+    var form = document.getElementsByClassName('need-novalidate-Update');
+    var validation = Array.prototype.filter.call(form, function (forms) {
+        forms.addEventListener('submit', function (event) {
+            if (forms.checkValidity() == false) {
+                event.preventDefault();
+            }
+            else {
+                event.preventDefault();
+                if (reset == false) {
+                    var obj = {};
+                    obj.UserCode = $('#utxtUserCode').val();
+                    obj.FullName = $('#utxtFullName').val();
+                    obj.EmpCode = $('#utxtEmployeeCode').val();
+                    obj.Branch = $('#uddlBranch').val();
+                    obj.Role = $('#uddlRole').val();
+                    obj.Locked = $('#uddlLock').val();
+                    obj.Status = $('#uddlStatus').val();
+
+                    $('#idFormUser').modal('hide');
+                    $('#idLoading').modal('show');
+
+                    $.ajax({
+                        url: '@Url.Action("UpdateUser","User")',
+                        type: "POST",
+                        dataType: "JSON",//OK
+                        data: { user: obj },
+                        success: function (data) {
+                            if (data.errCode == 0) {
+
+                                setTimeout(function () {
+                                    $('#idLoading').modal('hide');
+
+                                }, 2000);// Delay modal
+
+                                setTimeout(function () {
+                                    //alert(data.errMsg);
+                                    $('#idLoadingSucess').modal('show');
+                                    $('#msgSuccess').text(data.errMsg);
+                                    $('#idFormUser-Update').modal('hide');
+                                    getData();
+                                }, 2020);// Delay message
+
+
+                            } else {
+                                setTimeout(function () {
+                                    $('#idLoading').modal('hide');
+                                }, 2000);// Delay modal
+
+                                setTimeout(function () {
+                                    $('#idLoadingError').modal('show');
+                                    //alert(data.errMsg);
+                                    $('#msg').text(data.errMsg);
+                                }, 2020);// Delay message
+                            }
+                        },
+
+                    });
+
+                }
+
+
+
+
+            }
+            forms.classList.add('was-validated');
+        }, false);
+    });
+    //---------------------------------------------------------UPDATE FUNCTION---------------------------------------------------------
+
+
+
+    $(document).ready(function () {
+        getData();
+
+        //use for select row on datatable
+        $('#idUserView tbody').on('click', 'tr', function () {
+            $(this).toggleClass('select');
+
+        });
+
+        //$('#idUserView tbody').on('click', 'tr', function () {
+        //    if ($(this).hasClass('select')) {
+
+        //        $(this).removeClass('select');
+        //    } else {
+        //        table.$('tr.select').removeClass('select');
+        //        $(this).addClass('select');
+
+        //    }
+        //});
+
+    });
+
+
+
+    function calBranch(code){
+        $.ajax({
+            url: '@Url.Action("GetAllBranch","MasterData")',
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+              
+                $('#uddlBranch').empty();
+                for (var i = 0; i < data.branchs.length; i++) {
+                   
+                    $('#uddlBranch').append(new Option(data.branchs[i].branchName, data.branchs[i].branchCode));
+                }
+                alert(code);
+                $('#uddlBranch').val(code);
+            }
+        })
+
+    }
+
+    function GETBRANCH(){
+        $.ajax({
+            url: '@Url.Action("GetAllBranch","MasterData")',
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                $('#ddlBranch').empty();
+
+                for (var i = 0; i < data.branchs.length; i++) {
+                    $('#ddlBranch').append(new Option(data.branchs[i].branchName, data.branchs[i].branchCode));
+
+                }
+            }
+        })
+    }
+   
+   
+    //call branch 
+    GETBRANCH();
+
+    // Event handler for the change event of the dropdown list
+    $('#ddlBranch').change(function () {
+        var selectedBranch = $(this).val();
+        console.log('Selected Branch:', selectedBranch);
+       // alert(selectedBranch);
+        // You can use the selectedBranch value as needed
+    });
+
+  
+
+
+
+</script>

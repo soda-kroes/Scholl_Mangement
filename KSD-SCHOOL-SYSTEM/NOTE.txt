@@ -1,0 +1,77 @@
+﻿1. LINK DASBOARD: https://bootsnipp.com/snippets/Q0dAX
+2. DATBASE SCRIPT: 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USE [KSD_DB]
+GO
+/****** Object:  User [ksd]    Script Date: 10/28/2023 7:59:04 PM ******/
+CREATE USER [ksd] FOR LOGIN [ksd] WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  User [pentest]    Script Date: 10/28/2023 7:59:04 PM ******/
+CREATE USER [pentest] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  Table [dbo].[tblBranch]    Script Date: 10/28/2023 7:59:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblBranch](
+	[DocEntry] [int] IDENTITY(1,1) NOT NULL,
+	[BranchCode] [nchar](10) NULL,
+	[BranchName] [nchar](20) NULL,
+	[TaxCode] [nchar](10) NULL,
+	[TaxPer] [decimal](18, 0) NULL,
+	[Address] [nchar](50) NULL,
+	[Status] [nvarchar](20) NULL,
+	[CreateBy] [nvarchar](30) NULL,
+	[CreateDate] [datetime] NULL,
+ CONSTRAINT [PK_tblBranch] PRIMARY KEY CLUSTERED 
+(
+	[DocEntry] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblLevel]    Script Date: 10/28/2023 7:59:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblLevel](
+	[DocEntry] [int] IDENTITY(1,1) NOT NULL,
+	[LevelCode] [nchar](10) NULL,
+	[LevelName] [nchar](50) NULL,
+	[UnitPrice] [decimal](18, 0) NULL,
+	[Status] [nchar](50) NULL,
+	[Branch] [nvarchar](50) NULL,
+ CONSTRAINT [PK_tblLevel] PRIMARY KEY CLUSTERED 
+(
+	[DocEntry] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblUser]    Script Date: 10/28/2023 7:59:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblUser](
+	[DocEntry] [int] IDENTITY(1,1) NOT NULL,
+	[UserCode] [nchar](50) NULL,
+	[FullName] [nchar](50) NULL,
+	[EmpCode] [nchar](50) NULL,
+	[Branch] [nchar](10) NULL,
+	[Password] [nchar](50) NULL,
+	[Role] [char](1) NULL,
+	[Locked] [char](1) NULL,
+	[Change] [nchar](1) NULL,
+	[CreateDate] [date] NULL,
+	[CreateBy] [nchar](50) NULL,
+	[ExpiredDate] [date] NULL,
+	[ExpiredLocked] [char](1) NULL,
+	[Status] [char](1) NULL,
+ CONSTRAINT [PK_tblUser] PRIMARY KEY CLUSTERED 
+(
+	[DocEntry] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

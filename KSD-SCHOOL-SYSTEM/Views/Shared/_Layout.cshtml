@@ -1,0 +1,219 @@
+﻿ @using Microsoft.AspNetCore.Http;
+ @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>@ViewData["Title"] - KSD_SCHOOL_SYSTEM</title>
+     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+     <link rel="stylesheet" href="~/css/site.css" />
+     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+     <link href="~/css/slidebarstyle.css" rel="stylesheet" />
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+ </head>
+
+
+
+ <body style="background-color:#E5E5E5">
+
+     @* ------------------------ *@
+     <div class="container-fluid fixed-top" style="background-color: #032149 ">
+         <header>
+             <div class="row">
+                 <div class="col-md-6">
+                     <img src="~/Images/RUPP_logo.png" style="width:70px; height:70px; margin-left:20px; padding:2px;" />
+                     <span style="color:whitesmoke; font-size:20px;"><b​​>សកលវិទ្យាល័យភូមិន្ទភ្នំពេញ</b​​></span>
+
+                 </div>
+                 <div class="col-md-6  text-right" style="margin-top:13px; font-size:20px; color:whitesmoke">
+                     <small class="mtext-light">
+                         @*<b>Welcome &nbsp; <i class="fa-solid fa-user"></i> @Session["user"].ToString() | @Session["location"].ToString().ToUpper()</b>*@
+                         <b>Welcome &nbsp; <i class="fas fa-user"></i>  @HttpContextAccessor.HttpContext.Session.GetString("UserName") ||  @HttpContextAccessor.HttpContext.Session.GetString("Branch") &nbsp;<a asp-controller="Login" asp-action="Logout"><i class="fas fa-sign-out-alt" style="font-size:18px; color:whitesmoke"></i></a> </b>
+
+                     </small>
+                 </div>
+             </div>
+         </header>
+     </div>
+
+
+
+     @* ------------------------ *@
+
+
+
+     <div class="page-wrapper chiller-theme toggled " style="margin-top:50px;">
+         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#" style="margin-top:60px;">
+             <i class="fas fa-bars"></i>
+         </a>
+         <nav id="sidebar" class="sidebar-wrapper" style="margin-top:70px;">
+             <div class="sidebar-content">
+                 <div class="sidebar-brand">
+                     <a href="#">School Management</a>
+                     <div id="close-sidebar">
+                         <i class="fas fa-times"></i>
+                     </div>
+                 </div>
+                 <div class="sidebar-header">
+                     <div class="user-pic">
+                         <img class="img-responsive img-rounded" src="~/images/programmer.png"
+                              alt="User picture">
+                     </div>
+                     <div class="user-info">
+                         <b> @HttpContextAccessor.HttpContext.Session.GetString("UserName")</b>
+                         <span class="user-role text-center">@HttpContextAccessor.HttpContext.Session.GetString("Role")</span>
+                         <span class="user-status">
+                             <i class="fa fa-circle"></i>
+                             <span>Online</span>
+                         </span>
+                     </div>
+                 </div>
+                 <!-- sidebar-header  -->
+                 <div class="sidebar-menu">
+                     <ul>
+                         <li class="header-menu">
+                             <span>Registration</span>
+                         </li>
+                         <li class="sidebar-dropdown">
+                             <a asp-action="ViewDeposit" asp-controller="Deposit">
+                                 <i class="fa fa-tachometer-alt"></i>
+                                 <span>Deposit</span>
+                             </a>
+                         </li>
+                         <li class="sidebar-dropdown">
+                             <a href="#">
+                                 <i class="fa fa-tachometer-alt"></i>
+                                 <span>Invoice</span>
+                             </a>
+                         </li>
+                         <li class="sidebar-dropdown">
+                             <a href="#">
+                                 <i class="fa fa-tachometer-alt"></i>
+                                 <span>Refund</span>
+                             </a>
+                         </li>
+                         <li class="header-menu">
+                             <span>Source Management</span>
+                         </li>
+                         <li>
+                             <a href="/Branch/ViewBranch">
+                                 <i class="fa fa-book"></i>
+                                 <span>Branch Setup</span>
+                             </a>
+                         </li>
+                         <li>
+                             <a href="/Level/ViewLevel">
+                                 <i class="fa fa-calendar"></i>
+                                 <span>Level Setup</span>
+                             </a>
+                         </li>
+                         @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "Administration")
+                         {
+                             <li>
+                                 <a asp-action="ViewUser" asp-controller="User">
+                                     <i class="fa fa-folder"></i>
+                                     <span>User</span>
+                                 </a>
+                             </li>
+                         }
+                         @*<li class="header-menu">
+                             <span>Report</span>
+                         </li>
+                         <li class="sidebar-dropdown">
+                             <a asp-action="Privacy" asp-controller="Home">
+                                 <i class="fa fa-tachometer-alt"></i>
+                                 <span>Invoice Report</span>
+                             </a>
+                         </li>
+                         <li class="sidebar-dropdown">
+                             <a asp-action="Privacy" asp-controller="Home">
+                                 <i class="fa fa-tachometer-alt"></i>
+                                 <span>Refund Report</span>
+                             </a>
+                         </li>*@
+                     </ul>
+                 </div>
+                 <!-- sidebar-menu  -->
+             </div>
+             <!-- sidebar-content  -->
+             
+         </nav>
+         <!-- sidebar-wrapper  -->
+         <main class="page-content">
+             <div class="container-fluid">
+                 @RenderBody()
+             </div>
+         </main>
+         <!-- page-content" -->
+     </div>
+
+     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="~/js/site.js" asp-append-version="true"></script>
+     <script type="text/javascript">
+         $(".sidebar-dropdown > a").click(function () {
+             $(".sidebar-submenu").slideUp(200);
+             if (
+                 $(this)
+                     .parent()
+                     .hasClass("active")
+             ) {
+                 $(".sidebar-dropdown").removeClass("active");
+                 $(this)
+                     .parent()
+                     .removeClass("active");
+             } else {
+                 $(".sidebar-dropdown").removeClass("active");
+                 $(this)
+                     .next(".sidebar-submenu")
+                     .slideDown(200);
+                 $(this)
+                     .parent()
+                     .addClass("active");
+             }
+         });
+
+         $("#close-sidebar").click(function () {
+             $(".page-wrapper").removeClass("toggled");
+         });
+         $("#show-sidebar").click(function () {
+             $(".page-wrapper").addClass("toggled");
+         });
+
+
+
+         //for move popUp form
+         $(".modal-header").on("mousedown", function (mousedownEvt) {
+             var $draggable = $(this);
+             var x = mousedownEvt.pageX - $draggable.offset().left;
+             var y = mousedownEvt.pageY - $draggable.offset().top;
+
+             $("body").on("mousemove.draggable", function (mousemoveEvt) {
+                 $draggable.closest(".modal-dialog").offset({
+                     "left": mousemoveEvt.pageX - x,
+                     "top": mousemoveEvt.pageY - y
+                 });
+             });
+
+             $("body").one("mouseup", function () {
+                 $("body").off("mousemove.draggable");
+             });
+
+             $draggable.closest(".modal").one("hide.bs.modal", function () {
+                 $("body").off("mousemove.draggable");
+             });
+         });
+                                      //for move popUp form
+
+
+
+
+
+
+
+     </script>
+     @RenderSection("Scripts", required: false)
+ </body>
+ </html>

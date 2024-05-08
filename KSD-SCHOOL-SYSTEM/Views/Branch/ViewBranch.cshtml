@@ -1,0 +1,466 @@
+﻿@{
+    ViewData["Title"] = "Branch Setup";
+}
+
+@*link data table*@
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<link href=" https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    .select {
+        background-color: #68B6DE;
+    }
+
+    .table-responsive {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h5><i class="fas fa-home"></i>Home <i class="fas fa-arrow-right"></i> User <i class="fas fa-arrow-right"></i> View Branch</h5>
+        </div>
+    </div>
+    <br />
+    <div class="table-responsive">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="idTableBranch" class="table  table-bordered table-hover" style="width:100%;">
+                    <thead style=" background-color:#FBC576">
+                        <tr>
+                            <th>No</th>
+                            <th>Branch Code</th>
+                            <th>Branch Name</th>
+                            <th>Tax Code</th>
+                            <th>Tax (%)</th>
+                            <th>Address</th>
+                            <th>CreateBy</th>
+                            <th>CreateDate</th>
+                            <th>Status</th>
+                            <th>Command</th>
+                        </tr>
+                    </thead>
+                    <tfoot style=" background-color:#FBC576">
+                        <tr>
+                           <th>No</th>
+                            <th>Branch Code</th>
+                            <th>Branch Name</th>
+                            <th>Tax Code</th>
+                            <th>Tax (%)</th>
+                            <th>Address</th>
+                            <th>CreateBy</th>
+                            <th>CreateDate</th>
+                            <th>Status</th>
+                            <th>Command</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-outline-info" data-target="#idFormBranch" data-toggle="modal">Add new</button>
+        </div>
+    </div>
+</div>
+
+
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+<div class="modal fade" id="idFormBranch" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Branch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="need-novalidate-new" novalidate>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <b>Branch Code</b>
+                            <input id="txtBranchCode" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input branch code</div>
+                            <br />
+
+                            <b>Branch Name</b>
+                            <input id="txtBranchName" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input branch name</div>
+                            <br />
+
+                            <b>Address</b>
+                            <textarea id="txtAddress" class="form-control" row="3" required></textarea>
+                            <div class="invalid-feedback">please input address</div>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <b>Tax Code</b>
+                            <input id="txtTaxCode" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input Tax Code</div>
+                            <br />
+
+                            <b>Tax Per</b>
+                            <input id="txtTaxPer" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input Tax Code</div>
+                            <br />
+                           
+                            <b>Status</b>
+                            <select class="form-control" id="ddlStatus">
+                                <option value="I">Inactive</option>
+                                <option value="A" selected>Active</option>
+                            </select>
+                          
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Update PopUp Form----------------------------------------------------------*@
+<div class="modal fade" id="idFormBranchUpdate" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Branch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="need-novalidate-new-Update" novalidate>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <b>Branch Code</b>
+                            <input id="utxtBranchCode" type="text" class="form-control"  readonly/>
+                            <br />
+
+                            <b>Branch Name</b>
+                            <input id="branchNameu" type="text" class="form-control"  />
+                            <br />
+
+                            <b>Address</b>
+                            <textarea id="utxtAddress" class="form-control" row="3" ></textarea>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <b>Tax Code</b>
+                            <input id="utxtTaxCode" type="text" class="form-control"  />
+                            <br />
+
+                            <b>Tax Per</b>
+                            <input id="utxtTaxPer" type="number" class="form-control"  />
+                            <br />
+
+
+                            <b>Status</b>
+                            <select class="form-control" id="uddlStatus">
+                                <option value="I">Inactive</option>
+                                <option value="A" >Active</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+
+
+
+@*----------------------------------------------------------Create Loading PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoading" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Loading PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Error PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoadingError" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+            </div>
+            <div class="modal-body">
+                <div id="msg"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Error PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Success PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoadingSucess" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+            </div>
+            <div class="modal-body">
+                <div id="msgSuccess"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Success PopUp Form----------------------------------------------------------*@
+
+<script type="text/javascript">
+    //------------------------------------------------------for call datatable--------------------------------------------------------
+    // Call the DataTable default not have data
+    // $('#idTableLevel').DataTable();
+
+    var brands = [];
+    $('#idTableBranch').DataTable({
+        data: brands,
+        columns: [
+            { // Add a column for auto-increment ID
+                render: function (data, type, full, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: "branchCode" },
+            { data: "branchName" },
+            { data: "taxCode" },
+            { data: "taxPer" },
+            { data: "address" },
+            { data: "createBy" },
+            { data: "createDate" },
+            { data: "status" },
+            {
+                render: function (data, type, full, meta) {
+                    return '<a href="#" onclick="remove(' + full.docEntry + ')"><i class="fas fa-trash"></i></a>'
+                }
+            }
+        ]
+    });
+
+     var table = $('#idTableBranch').DataTable();
+ 
+
+    function getData() {
+        $.ajax({
+            url: '@Url.Action("GetAllBranch","Branch")',
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                if (data.errCode == 0) {
+                    brands = data.branchs; // Update the levels array with the received data
+
+                    table.clear();
+                    table.rows.add(brands);
+                    table.draw();
+                } else {
+                    $('#msg').text(data.errMsg);
+                }
+            }
+        });
+    }
+
+      //call function getData
+       getData();
+    
+    // Hold screen to validation
+    var form = document.getElementsByClassName('need-novalidate-new');
+    var validation = Array.prototype.filter.call(form, function (forms) {
+        forms.addEventListener('submit', function (event) {
+            if (forms.checkValidity() == false) {
+                event.preventDefault();
+            }
+            else {
+                event.preventDefault();
+
+                   var obj = {};
+                    obj.BranchCode= $('#txtBranchCode').val();
+                    obj.BranchName= $('#txtBranchName').val();
+                    obj.TaxCode= $('#txtTaxCode').val();
+                    obj.TaxPer= $('#txtTaxPer').val();
+                    obj.Address= $('#txtAddress').val();
+                    obj.Status = $('#ddlStatus').val()
+
+                    
+                $('#idFormBranch').modal('hide');
+                $('#idLoading').modal('show');
+
+                $.ajax({
+                    url: '@Url.Action("CreateBranch","Branch")',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {branch: obj},
+                    success: function(data){
+                        if(data.errCode==0){
+                             setTimeout(function () {
+                                $('#idLoading').modal('hide');
+
+                            }, 2000);// Delay modal
+
+                             setTimeout(function () {
+                                $('#idLoadingSucess').modal('show');
+                                $('#msgSuccess').text(data.errMsg);
+
+                                // Reset the form
+                                forms.reset();
+                                forms.classList.remove('was-validated');
+
+                                //call funcation 
+                                getData();
+                            }, 2020);// Delay message
+
+                        }
+                        else{
+                             setTimeout(function () {
+                                $('#idLoading').modal('hide');
+                            }, 2000);// Delay modal
+
+                             setTimeout(function () {
+                                $('#idLoadingError').modal('show');
+                                $('#msg').text(data.errMsg);
+                            }, 2020);// Delay message
+                        }
+                    }
+                })  
+            }
+            forms.classList.add('was-validated');
+        }, false);
+    });
+
+
+    //-----------------------------------------------------Function Update-----------------------------------------------------
+    //i use double click to show update form
+    $('#idTableBranch tbody').on('dblclick', 'tr', function () {
+        //use for select row on datatable
+        if ($(this).hasClass('select')) {
+
+            $(this).removeClass('select');
+        } else {
+            table.$('tr.select').removeClass('select');
+            $(this).addClass('select');
+
+        }
+
+        var index = table.row('.select').index()
+        var data = table.row(index).data();
+
+        //Get Data From Table For Update
+        $('#utxtBranchCode').val(data.branchCode);
+        $('#branchNameu').val(data.branchName);
+        $('#utxtTaxCode').val(data.taxCode);
+        $('#utxtTaxPer').val(data.taxPer);
+        $('#utxtAddress').val(data.address);
+        if (data.status == "Active") {
+            $('#uddlStatus').val('A')
+        }
+        else {
+            $('#uddlStatus').val('I')
+        }
+
+        //For Show Form Update
+        $('#idFormBranchUpdate').modal('show');
+    })
+
+
+    // Hold screen to validation
+    var form = document.getElementsByClassName('need-novalidate-new-Update');
+    var validation = Array.prototype.filter.call(form, function (forms) {
+        forms.addEventListener('submit', function (event) {
+            if (forms.checkValidity() == false) {
+                event.preventDefault();
+            }
+            else {
+                event.preventDefault();
+
+                var obj = {};
+                obj.branchCode = $('#utxtBranchCode').val();
+                obj.branchName = $('#branchNameu').val();
+                obj.taxCode = $('#utxtTaxCode').val();
+                obj.taxPer = $('#utxtTaxPer').val();
+                obj.address = $('#utxtAddress').val();
+                obj.status = $('#uddlStatus').val();
+               
+
+
+                $('#idFormBranchUpdate').modal('hide');
+                $('#idLoading').modal('show');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateBranch","Branch")',
+                    type: "POST",
+                    dataType: "JSON",//OK
+                    data: { branch: obj },
+                    success: function (data) {
+                        if (data.errCode == 0) {
+
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                //alert(data.errMsg);
+                                $('#idLoadingSucess').modal('show');
+                                $('#msgSuccess').text(data.errMsg);
+                                $('#idFormBranchUpdate').modal('hide');
+                                getData();
+                            }, 2020);// Delay message
+
+
+                        } else {
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                $('#idLoadingError').modal('show');
+                                //alert(data.errMsg);
+                                $('#msg').text(data.errMsg);
+                            }, 2020);// Delay message
+                        }
+                    },
+
+                });
+
+
+
+
+
+
+            }
+            forms.classList.add('was-validated');
+        }, false);
+    });
+
+
+           //-----------------------------------------------------Function Update-----------------------------------------------------
+
+
+</script>

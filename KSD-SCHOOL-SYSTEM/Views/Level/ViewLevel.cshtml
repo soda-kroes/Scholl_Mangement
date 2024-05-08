@@ -1,0 +1,445 @@
+﻿@{
+    ViewData["Title"] = "ViewLevel";
+}
+@*link data table*@
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<link href=" https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    .select {
+        background-color: #68B6DE;
+    }
+
+    .table-responsive {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h5><i class="fas fa-home"></i>Home <i class="fas fa-arrow-right"></i> User <i class="fas fa-arrow-right"></i> View Level</h5>
+        </div>
+    </div>
+    <br />
+    <div class="table-responsive">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="idTableLevel" class="table  table-bordered table-hover" style="width:100%;">
+                    <thead style=" background-color:#FBC576">
+                        <tr>
+                            <th>No</th>
+                            <th>Level Code</th>
+                            <th>Level Name</th>
+                            <th>Unit Price</th>
+                            <th>Status</th>
+                            <th>Command</th>
+                        </tr>
+                    </thead>
+                    <tfoot style=" background-color:#FBC576">
+                        <tr>
+                            <th>No</th>
+                            <th>Level Code</th>
+                            <th>Level Name</th>
+                            <th>Unit Price</th>
+                            <th>Status</th>
+                            <th>Command</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-outline-info" data-target="#idFormLevel" data-toggle="modal">Add new</button>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+<div class="modal fade" id="idFormLevel" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Level</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="need-novalidate-new" novalidate>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            Level Code
+                            <input id="txtLevelCode" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input level code</div>
+                            Level Name
+                            <input id="txtLevelName" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input level name</div>
+                        </div>
+                        <div class="col-sm-6">
+                            Unit Price
+                            <input id="txtUnitPrice" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input unit price</div>
+                            Status
+                            <select class="form-control" id="ddlStatus">
+                                <option value="I">Inactive</option>
+                                <option value="A" selected>Active</option>
+                            </select>
+                            <div class="invalid-feedback">please select status</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Insert PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Update PopUp Form----------------------------------------------------------*@
+<div class="modal fade" id="idFormLevelUpdate" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Level</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="need-novalidate-Update" novalidate>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            Level Code
+                            <input id="utxtLevelCode" type="text" class="form-control" readonly />
+                            <div class="invalid-feedback">please input level code</div>
+                            Level Name
+                            <input id="utxtLevelName" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input level name</div>
+                        </div>
+                        <div class="col-sm-6">
+                            Unit Price
+                            <input id="utxtUnitPrice" type="text" class="form-control" required />
+                            <div class="invalid-feedback">please input unit price</div>
+                            Status
+                            <select class="form-control" id="uddlStatus">
+                                <option value="I">Inactive</option>
+                                <option value="A">Active</option>
+                            </select>
+                            <div class="invalid-feedback">please select status</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Update PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Loading PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoading" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Loading PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Error PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoadingError" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+            </div>
+            <div class="modal-body">
+                <div id="msg"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Error PopUp Form----------------------------------------------------------*@
+
+@*----------------------------------------------------------Create Success PopUp Form----------------------------------------------------------*@
+<div class="modal" id="idLoadingSucess" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm vh-100" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Message</h5>
+            </div>
+            <div class="modal-body">
+                <div id="msgSuccess"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*----------------------------------------------------------Create Success PopUp Form----------------------------------------------------------*@
+
+<script type="text/javascript">
+    //------------------------------------------------------for call datatable--------------------------------------------------------
+    // Call the DataTable default not have data
+    // $('#idTableLevel').DataTable();
+
+    var levels = [];
+    $('#idTableLevel').DataTable({
+        data: levels,
+        columns: [
+            { // Add a column for auto-increment ID
+                render: function (data, type, full, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: "levelCode" },
+            { data: "levelName" },
+            { data: "unitPrice" },
+            { data: "status" },
+            {
+                render: function (data, type, full, meta) {
+                    return '<a href="#" onclick="remove(' + full.docEntry + ')"><i class="fas fa-trash"></i></a>'
+                }
+            }
+        ]
+    });
+
+
+    var table = $('#idTableLevel').DataTable();
+  
+
+    function getData() {
+        $.ajax({
+            url: '@Url.Action("GetAllLevel","Level")',
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                if (data.errCode == 0) {
+                    levels = data.level; // Update the levels array with the received data
+
+                    table.clear();
+                    table.rows.add(levels);
+                    table.draw();
+                } else {
+                    // Handle the error case if needed
+                }
+            }
+        });
+    }
+    //------------------------------------------------------for call datatable--------------------------------------------------------
+
+    //call function getData
+    getData();
+
+    // Hold screen to validation
+    var form = document.getElementsByClassName('need-novalidate-new');
+    var validation = Array.prototype.filter.call(form, function (forms) {
+        forms.addEventListener('submit', function (event) {
+            if (forms.checkValidity() == false) {
+                event.preventDefault();
+            }
+            else {
+                event.preventDefault();
+                var obj = {};
+                obj.LevelCode = $('#txtLevelCode').val()
+                obj.LevelName = $('#txtLevelName').val()
+                obj.UnitPrice = $('#txtUnitPrice').val()
+                obj.Status = $('#ddlStatus').val()
+
+                $('#idFormLevel').modal('hide');
+                $('#idLoading').modal('show');
+
+                $.ajax({
+                    url: '@Url.Action("CreateLevel","Level")',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { level: obj },
+                    success: function (data) {
+                        if (data.errCode == 0) {
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+
+                                $('#idLoadingSucess').modal('show');
+                                $('#msgSuccess').text(data.errMsg);
+                                getData();
+                            }, 2020);// Delay message
+                        }
+                        else {
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                $('#idLoadingError').modal('show');
+                                $('#msg').text(data.errMsg);
+                            }, 2020);// Delay message
+                        }
+                    }
+                })
+
+
+
+            }
+            forms.classList.add('was-validated');
+        }, false);
+    });
+
+
+    //-----------------------------------------------------Function Remove-----------------------------------------------------
+    function remove(ID) {
+        if (confirm("Do you want to delete? ") == true) {
+            $.ajax({
+                url: '@Url.Action("DeleteLevel","Level")',
+                type: "GET",
+                dataType: "JSON",
+                data: { docEntry: ID },
+                success: function (data) {
+                    if (data.errCode == 0) {
+                        $('#idLoadingSucess').modal('show');
+                        $('#msgSuccess').text(data.errMsg);
+                        getData();
+                    }
+                    else {
+                        $('#idLoadingError').modal('show');
+                        //alert(data.errMsg);
+                        $('#msg').text(data.errMsg);
+                    }
+                }
+            })
+        }
+
+
+    }
+    //-----------------------------------------------------Function Remove-----------------------------------------------------
+
+
+
+
+
+    //-----------------------------------------------------Function Update-----------------------------------------------------
+    //i use double click to show update form
+    $('#idTableLevel tbody').on('dblclick', 'tr', function () {
+        //use for select row on datatable
+        if ($(this).hasClass('select')) {
+
+            $(this).removeClass('select');
+        } else {
+            table.$('tr.select').removeClass('select');
+            $(this).addClass('select');
+
+        }
+
+        var index = table.row('.select').index()
+        var data = table.row(index).data();
+
+        //Get Data From Table For Update
+        $('#utxtLevelCode').val(data.levelCode);
+        $('#utxtLevelName').val(data.levelName);
+        $('#utxtUnitPrice').val(data.unitPrice);
+        if (data.status == "Active") {
+            $('#uddlStatus').val('A')
+        }
+        else {
+            $('#uddlStatus').val('I')
+        }
+
+        //For Show Form Update
+        $('#idFormLevelUpdate').modal('show');
+    })
+
+
+
+
+    // Hold screen to validation
+    var form = document.getElementsByClassName('need-novalidate-Update');
+    var validation = Array.prototype.filter.call(form, function (forms) {
+        forms.addEventListener('submit', function (event) {
+            if (forms.checkValidity() == false) {
+                event.preventDefault();
+            }
+            else {
+                event.preventDefault();
+
+                var obj = {};
+                obj.LevelCode = $('#utxtLevelCode').val();
+                obj.LevelName = $('#utxtLevelName').val();
+                obj.UnitPrice = $('#utxtUnitPrice').val();
+                obj.Status = $('#uddlStatus').val();
+
+
+                $('#idFormLevelUpdate').modal('hide');
+                $('#idLoading').modal('show');
+
+                $.ajax({
+                    url: '@Url.Action("UpdateLevel","Level")',
+                    type: "POST",
+                    dataType: "JSON",//OK
+                    data: { level: obj },
+                    success: function (data) {
+                        if (data.errCode == 0) {
+
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                //alert(data.errMsg);
+                                $('#idLoadingSucess').modal('show');
+                                $('#msgSuccess').text(data.errMsg);
+                                $('#idFormLevelUpdate').modal('hide');
+                                getData();
+                            }, 2020);// Delay message
+
+
+                        } else {
+                            setTimeout(function () {
+                                $('#idLoading').modal('hide');
+                            }, 2000);// Delay modal
+
+                            setTimeout(function () {
+                                $('#idLoadingError').modal('show');
+                                //alert(data.errMsg);
+                                $('#msg').text(data.errMsg);
+                            }, 2020);// Delay message
+                        }
+                    },
+
+                });
+
+
+
+
+
+
+            }
+            forms.classList.add('was-validated');
+        }, false);
+    });
+
+
+       //-----------------------------------------------------Function Update-----------------------------------------------------
+
+
+</script>

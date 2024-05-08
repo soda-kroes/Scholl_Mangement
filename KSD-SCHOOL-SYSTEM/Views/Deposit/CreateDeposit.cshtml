@@ -1,0 +1,257 @@
+﻿@{
+    ViewData["Title"] = "Create Deposit";
+
+}
+@*link data table*@
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<link href=" https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    .select {
+        background-color: #68B6DE;
+    }
+
+    .table-responsive {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    .bgcolor.active {
+        background - color: #007bff;
+        color: #fff;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            <li class="nav-tabs nav-item active">
+                <a class="nav-link bgcolor active" data-toggle="tab" href="#student">Student Information</a>
+            </li>
+            <li class="nav-tabs nav-item">
+                <a class="nav-link bgcolor" data-toggle="tab" href="#level">Level Infomation</a>
+            </li>
+        </ul>
+        <hr />
+        <br />
+
+        <div class="tab-content">
+            <div id="student" class="tab-pane fade in active show">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <b>Student Name: </b>
+                        <input type="text" class="form-control" id="txtStuName" />
+                        <br />
+                        <b>Tell: </b>
+                        <input type="text" class="form-control" id="txtTell" />
+                        <br />
+                        
+                    </div>
+
+                    <div class="col-sm-6">
+                        <b>Invoice No. : </b>
+                        <input type="text" class="form-control" id="txtInvoiceNo" readonly />
+                        <br />
+
+                        <b>Posting Date: </b>
+                        <input type="date" class="form-control" id="dtPosting" />
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <b>Remarks: </b>
+                        <textarea class="form-control" id="txtRemarks " rows="3"></textarea>
+
+                    </div>
+
+                </div>
+                <hr />
+
+            </div>
+
+            <div id="level" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <b>Level Name : </b>
+                        <select class="form-control" id="ddlLevel"></select>
+                        <br />
+
+                        <b>Unit Price : </b>
+                        <input type="number" class="form-control" id="txtUnitPrice" readonly/>
+                        <br />
+
+                        <b>Discount(%) : </b>
+                        <input type="number" class="form-control" id="txtDisPer" />
+                        <br />
+
+                        <b>Discount Amount : </b>
+                        <input type="number" class="form-control" id="txtDisAmount" />
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <b>Start Date : </b>
+                        <input type="date" class="form-control" id="txtStartDate" />
+                        <br />
+
+                        <b>Time : </b>
+                        <input type="text" class="form-control" id="txtTime" />
+                        <br />
+
+                        <b>Schedule : </b>
+                        <input type="text" class="form-control" id="txtSchedule" />
+
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-outline-info" id="btnAddLevel">Add Level</button>
+
+                    </div>
+                    <br />
+
+                </div>
+                <div class="table-responsive" style="margin-top:20px; ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="idTableLevelInfo" class="table  table-bordered table-hover" style="width:100%;">
+                                <thead style=" background-color:#FBC576">
+                                    <tr>
+                                        <th>Level Code</th>
+                                        <th>Level Name</th>
+                                        <th>Unit Price</th>
+                                        <th>Deposit</th>
+                                        <th>Balance</th>
+                                        <th>Discount(%)</th>
+                                        <th>Discount Amount</th>
+                                        <th>StartDate</th>
+                                        <th>Time</th>
+                                        <th>Schedule</th>
+                                        <th>Command</th>
+                                    </tr>
+                                </thead>
+                               
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-8">
+
+                    </div>
+                    <div class="col-sm-4">
+                        <b>Total : </b>
+                        <input type="number" class="form-control" id="txtTotal" readonly />
+                        <br />
+                        <b>Deposit : </b>
+                        <input type="number" class="form-control" id="txtDeposit" readonly />
+                        <br />
+
+                        <b>Balance : </b>
+                        <input type="number" id="txtBalance" class="form-control" />
+                    </div>
+
+                </div>
+                <br />
+
+
+
+            </div>
+            <div class="row" style="margin-left:4px;">
+                <button class="btn btn-outline-info" id="btn tbnAdd">Add New</button>
+
+            </div>
+
+
+        </div>
+
+</div>
+
+
+    </div>
+
+<script type="text/javascript">
+    //for custom datatable
+    $('#idTableLevelInfo').DataTable({
+       
+        searching: false,
+        paging: false,
+        info: false
+    });
+
+
+   
+
+    function GetAllLevel() {
+        $.ajax({
+            url: '@Url.Action("getLevel", "MasterData")',
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                $('#ddlLevel').empty();
+                $('#ddlLevel').append(new Option("-----Select------", 0));
+
+                for (var i = 0; i < data.level.length; i++) {
+                    $('#ddlLevel').append(new Option(data.level[i].levelCode +'-'+ data.level[i].levelName,data.level[i].unitPrice));
+
+                }
+            }
+        });
+    }
+    //call
+    GetAllLevel();
+
+  
+    //for select level 
+    $('#ddlLevel').change(function () {
+        var unitPrice = $('#ddlLevel').val();
+        $('#txtUnitPrice').val(unitPrice);
+    })
+
+    //fro caculate discount percentage 
+    $('#txtDisPer').change(function () {
+        if (Number($('#txtDisPer').val() > 100)) {
+            $('#txtDisPer').val(100);
+            $('#txtDisAmount').val($('#txtUnitPrice').val())
+        }
+        else if (Number($('#txtDisPer').val()) < 0) {
+            $('#txtDisPer').val(0);
+            $('#txtDisAmount').val(0);
+        }
+        else {
+            var disAmount = Number($('#txtUnitPrice').val()) * (Number($('#txtDisPer').val()) / 100)
+          //  $('#txtDisAmount').val(disAmount);
+            $('#txtDisAmount').val(Math.round(Math.round(disAmount * 1000) / 10) / 100)//for cut digit 2
+        }
+    })
+
+
+
+  
+    $('#txtDisAmount').change(function () {
+        if (Number($('#txtDisPer').val()) > Number($('#txtUnitPrice').val())) {
+            $('#txtDisPer').val(100);
+            $('#txtDisAmount').val($('#txtUnitPrice').val());
+        }
+        else if (Number($('#txtDisAmount').val()) < 0) {
+            $('#txtDisPer').val(0);
+            $('#txtDisAmount').val(0);
+        }
+        else {
+        
+            var disper = (Number($('#txtDisAmount').val()) * 100) / Number($('#txtUnitPrice').val());
+            //  $('#txtDisPer').val(disper);
+            $('#txtDisPer').val(Math.round(Math.round(disper*1000)/10)/100)//for cut degit 2
+        }
+    });
+
+
+</script>
+
+

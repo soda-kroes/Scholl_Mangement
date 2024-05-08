@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    /*.card-body :hover .fas {
+       color:red;
+       font-size:100px;
+       }*/
+    .card-body:hover .icon1 {
+        color: red;
+        font-size: 100px;
+        transition: all 0.3s ease;
+    }
+
+    .icon1 {
+        font-size: 80px;
+    }
+</style>
+<div class="text-center">
+    <h3><b class="text-primary"> <i class="fas fa-graduation-cap"></i> SCHOOL MANAGEMENT SYSTEM</b></h3>
+</div>
+<br />
+<br />
+<div class="row">
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Deposite</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="ViewDeposit" asp-controller="Deposit">
+                        <h5>
+                            <i class="fas fa-money-bill-alt icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Invoice</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="" asp-controller="">
+                        <h5>
+                            <i class="far fa-file-alt icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Refund</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="" asp-controller="">
+                        <h5>
+                            <i class="fas fa-undo icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Branch SetUp</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="" asp-controller="">
+                        <h5>
+                            <i class="fas fa-building icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">User</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="ViewUser" asp-controller="User">
+                        <h5>
+                            <i class="fas fa-users icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Invoice Report</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="" asp-controller="">
+                        <h5>
+                            <i class="far fa-file-alt icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Refund Report</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="" asp-controller="">
+                        <h5>
+                            <i class="fas fa-undo icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin-bottom:10px;">
+        <div class="card" style="height:250px;">
+            <div class="card-body">
+                <div class="text-center">
+                    <b style="font-size:18px;">Setting</b>
+                </div>
+                <div class="text-center" style="margin-top:30px;">
+                    <a asp-action="" asp-controller="">
+                        <h5>
+                            <i class="fas fa-cogs icon1"></i>
+                        </h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

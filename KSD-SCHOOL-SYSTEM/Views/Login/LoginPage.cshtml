@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "LoginPage";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - KSD_SCHOOL_SYSTEM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="~/css/slidebarstyle.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body style="background-color:#E5E5E5">
+    <div class="container">
+        <div class="row justify-content-center" style="margin-top:20%;">
+            <div class="col-sm-6">
+                <div class="alert alert-danger d-none" id="msg"></div>
+                <div class="card">
+                    <div class="card-header">
+                        LOG IN
+                    </div>
+                    <div class="card-body">
+                        <form class="need-validate" novalidate>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <button class="input-group-text" disabled><i class="fa fa-user"></i></button>
+                                        </div>
+                                        <input type="text" class="form-control" id="txtUser" placeholder="User Code" required />
+                                        <div class="invalid-feedback">please enter your username.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <button class="input-group-text" disabled><i class="fa fa-key"></i></button>
+                                        </div>
+                                        <input type="password" class="form-control" id="txtPassword" placeholder="Password" required />
+                                        <div class="invalid-feedback">please enter your password.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <button class="btn btn-outline-primary  float-right" type="submit" style="width:110px;">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        // Hold screen to validation
+        var form = document.getElementsByClassName('need-validate');
+        var validation = Array.prototype.filter.call(form, function (forms) {
+            forms.addEventListener('submit', function (event) {
+                if (forms.checkValidity() == false) {
+                    event.preventDefault();
+                }
+                else {
+                    event.preventDefault();
+
+                    var userCode = $('#txtUser').val();
+                    var password = $('#txtPassword').val();
+
+
+                    $.ajax({
+                        url: '@Url.Action("CheckLogin","Login")',
+                        type: "GET",
+                        dataType: "JSON",//OK
+                        data: { UserCode: userCode, Password: password },
+                        success: function (data) {
+                            if (data.errCode == 0) {
+                                window.location.replace('@Url.Action("Index","Home")')
+
+                            }
+                            else if (data.errCode == 4) {
+                                window.location.replace('@Url.Action("ChangeDefaultPassword","Login")')
+                            }
+                            else {
+
+                                $('#msg').removeClass('d-none')
+                                $('#msg').text(data.errMsg)
+                                setTimeout(function () {
+                                    $('#msg').addClass('d-none')
+                                }, 5000)
+                            }
+                        },
+
+                    });
+
+
+
+                }
+                forms.classList.add('was-validated');
+            }, false);
+        });
+
+
+    </script>
+</body>
+</html>
